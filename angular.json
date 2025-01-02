@@ -58,6 +58,28 @@
               "optimization": false,
               "sourceMap": true
             },
+            "qa": {
+              "fileReplacements": [
+               {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
+                }
+              ],
+              "outputPath": "distqa",
+              "optimization": false,
+              "sourceMap": true
+            },
+            "prod": {
+              "fileReplacements": [
+               {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputPath": "distprod",
+              "optimization": false,
+              "sourceMap": true
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,
