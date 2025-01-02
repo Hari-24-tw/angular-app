@@ -8,30 +8,38 @@ on:
         branches:
             - main
 
+
+env:
+  MATRIX_ENV: dev,qa,prod
+
 jobs:
   build:
-      runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        environment: [dev, qa, prod]
+    runs-on: ubuntu-24.04
 
-      steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '22.12.0'
-      
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '22.12.0'
+    
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
 
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: npm install
 
-      - name: Build Angular app
-        run: ng build --progress=false -c=dev --output-path=distdev --base-href=/
+    - name: Build Angular app for ${{ matrix.environment }}
+      run: ng build --progress=false -c=${{ matrix.environment }} --output-path=dist${{ matrix.environment }} --base-href=/
 
-      - name: Upload production artifacts
-        uses: actions/upload-artifact@v4.5.0
-        with:
-          name: angular-app-${{ github.run_number }}
-          path: distdev/
+    - name: Upload ${{ matrix.environment }} artifacts
+      uses: actions/upload-artifact@v4.5.0
+      with:
+        name: angular-app-${{ matrix.environment }}-${{ github.run_number }}
+        path: dist${{ matrix.environment }}/
+
