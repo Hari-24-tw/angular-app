@@ -7,10 +7,17 @@ on:
   pull_request:
     branches:
       - main
+  
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Build configuration'
+        required: true
+        default: 'dev'
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout repository
@@ -35,5 +42,3 @@ jobs:
       with:
         name: angular-app-${{ github.run_number }}
         path: distdev/
-
-    
