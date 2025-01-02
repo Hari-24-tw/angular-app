@@ -28,9 +28,9 @@ jobs:
       run: ng build --progress=false -c=dev --output-path=distdev --base-href=/
 
     - name: Upload production artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4.5.0
       with:
         name: angular-app-${{ github.run_number }}
-        path: dist/
+        path: distdev/
 
     
