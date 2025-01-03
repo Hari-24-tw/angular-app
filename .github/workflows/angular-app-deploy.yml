@@ -1,7 +1,7 @@
 name: Angular-app-deploy
 on:
     workflow_run:
-        workflows: ["angular-app-build"]
+        workflows: ["Angular-app-build"]
         types:
             - completed
 
