@@ -18,6 +18,7 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                 name: angular-app-dev-${{ github.run_number }}.zip
+                workflow: Angular-app-build
                 path: ./artifact
             
             - name: Unzip artifact
