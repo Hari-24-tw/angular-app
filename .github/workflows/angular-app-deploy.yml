@@ -1,0 +1,27 @@
+name: angular-app-deploy
+on:
+    workflow_run:
+        workflows: ["angular-app-pipeline"]
+        types:
+            - completed
+
+jobs:
+    deploy-dev:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Deploy to Development
+              run: echo "Development deployment successful"
+
+    deploy-qa:
+        needs: deploy-dev
+        runs-on: ubuntu-latest
+        steps:
+           - name: Deploy to QA
+             run: echo "Staging deployment successful"
+
+    deploy-prod:
+        needs: deploy-qa
+        runs-on: ubuntu-latest
+        steps:
+          - name: Deploy to Production
+            run: echo "Production deployment successful"
