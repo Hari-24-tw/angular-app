@@ -17,12 +17,11 @@ jobs:
               id: download-artifact
               uses: actions/download-artifact@v3
               with:
-                name: angular-app-dev-${{ github.run_number }}.zip
-                workflow: Angular-app-build
+                name: angular-app-dev-8.zip
                 path: ./artifact
             
             - name: Unzip artifact
-              run: unzip ./artifact/angular-app-dev-${{ github.run_number }}.zip -d ./artifact
+              run: unzip ./artifact/angular-app-dev-8.zip -d ./artifact
             
             - name: Artifact contents
               run: ls -l ./artifact
