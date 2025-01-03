@@ -1,4 +1,4 @@
-name: Angular App Pipeline
+name: Angular-app-build
 
 on:
     push:
