@@ -8,9 +8,9 @@ on:
 jobs:
     deploy-dev:
         runs-on: ubuntu-22.04
-        environment: Dev
+        environment: DEV
         steps:
-            - name: Deploy to Development
+            - name: Deploy to Dev
               run: echo "Development deployment successful"
 
     deploy-qa:
@@ -19,12 +19,12 @@ jobs:
         environment: QA
         steps:
            - name: Deploy to QA
-             run: echo "Staging deployment successful"
+             run: echo "Testing deployment successful"
 
     deploy-prod:
         needs: deploy-qa
         runs-on: ubuntu-22.04
-        environment: Prod
+        environment: PROD
         steps:
-          - name: Deploy to Production
+          - name: Deploy to Prod
             run: echo "Production deployment successful"
