@@ -41,4 +41,3 @@ jobs:
       with:
         name: angular-app-${{ matrix.environment }}-${{ github.run_number }}.zip
         path: dist${{ matrix.environment }}/
-
