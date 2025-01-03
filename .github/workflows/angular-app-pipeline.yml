@@ -36,9 +36,9 @@ jobs:
     - name: Build Angular app for ${{ matrix.environment }}
       run: ng build --progress=false -c=${{ matrix.environment }} --output-path=dist${{ matrix.environment }} --base-href=/
 
-    - name: Upload ${{ matrix.environment }} artifacts
+    - name: Upload ${{ matrix.environment }} artifact
       uses: actions/upload-artifact@v4.5.0
       with:
-        name: angular-app-${{ matrix.environment }}-${{ github.run_number }}
+        name: angular-app-${{ matrix.environment }}-${{ github.run_number }}.zip
         path: dist${{ matrix.environment }}/
 
