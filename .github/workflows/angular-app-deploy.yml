@@ -13,20 +13,6 @@ jobs:
             - name: Deploy to Dev
               run: echo "Development deployment successful"
 
-            - name: Download artifact
-              id: download-artifact
-              uses: actions/download-artifact@v3
-              with:
-                name: angular-app-dev-8.zip
-                path: ./artifact
-            
-            - name: Unzip artifact
-              run: unzip ./artifact/angular-app-dev-8.zip -d ./artifact
-            
-            - name: Artifact contents
-              run: ls -l ./artifact
-
-
     deploy-qa:
         needs: deploy-dev
         runs-on: ubuntu-22.04
