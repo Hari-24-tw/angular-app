@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        environment: ${{ fromJson(github.event.inputs.environments) }}
+        environment: ${{ fromJson(github.event.inputs.environments || '["dev"]') }}
 
     steps:
     - name: Checkout repository
