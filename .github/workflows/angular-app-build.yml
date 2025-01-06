@@ -14,15 +14,12 @@ on:
           required: true
           default: 'dev'
                 
-env:
-  MATRIX_ENV: ${{ github.event.inputs.environment }}
-
 
 jobs:
   build:
     strategy:
       matrix:
-        environment: [dev, qa, prod]
+        environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-24.04
 
     steps:
