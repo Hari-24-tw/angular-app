@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
         inputs:
             environments:
-                description: 'Comma-separated list of environments to deploy to (e.g., dev, staging, prod)'
+                description: 'Comma-separated list of environments to deploy to e.g. ["dev", "qa", "prod"]'
                 default: '["dev"]'
                 type: string
             sha:

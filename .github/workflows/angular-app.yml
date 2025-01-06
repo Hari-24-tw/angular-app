@@ -55,7 +55,6 @@ jobs:
 
     steps:
     - name: Deploy to ${{ matrix.environment }}
-      if: ${{ matrix.environment }}
       run: echo "Deploy step for ${{ matrix.environment }} environment"
 
 
