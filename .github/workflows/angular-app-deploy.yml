@@ -8,13 +8,24 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-22.04
-        strategy:
-            matrix:
-                environment: [dev, qa, prod] # List all possible environments here
-        environment: ${{ matrix.environment }}
         steps:
-            - name: Set environment variable
-              run: echo "ENVIRONMENT=${{ matrix.environment }}" | tr '[:lower:]' '[:upper:]' >> $GITHUB_ENV
-            - name: Deploy to ${{ env.ENVIRONMENT }}
+            - name: Download build artifact
+              uses: actions/download-artifact@v2
+              with:
+                  name: built-environments
+                  path: ./built-environments
+
+            - name: Read built environments
+              id: read-envs
+              run: |
+                  BUILT_ENVS=$(cat ./built-environments/environments.txt)
+                  echo "BUILT_ENVS=$BUILT_ENVS" >> $GITHUB_ENV
+
+            - name: Deploy to built environments
               if: contains(github.event.workflow_run.conclusion, 'success')
-              run: echo "${{ env.ENVIRONMENT }} deployment successful"
+              run: |
+                  for ENV in ${{ env.BUILT_ENVS }}; do
+                      echo "Deploying to $ENV"
+                      # Add your deployment script/command here
+                      echo "$ENV deployment successful"
+                  done
