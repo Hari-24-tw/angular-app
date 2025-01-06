@@ -1,4 +1,4 @@
-name: Angular-app-build
+name: Angular-app
 
 on:
   workflow_dispatch:
