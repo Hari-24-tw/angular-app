@@ -7,9 +7,16 @@ on:
     pull_request:
         branches:
             - main
-
+    workflow_dispatch:
+      inputs:
+        environment:
+          description: 'Environment to deploy to'
+          required: true
+          default: 'dev'
+                
 env:
-  MATRIX_ENV: dev,qa,prod
+  MATRIX_ENV: ${{ github.event.inputs.environment }}
+
 
 jobs:
   build:
