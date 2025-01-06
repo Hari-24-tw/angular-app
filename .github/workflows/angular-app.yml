@@ -52,4 +52,13 @@ jobs:
 
     steps:
     - name: Deploy to ${{ matrix.environment }}
+      if: ${{ matrix.environment != 'prod' }}
       run: echo "Deploy step for ${{ matrix.environment }} environment"
+
+    - name: Wait for QA deployment to finish
+      if: ${{ matrix.environment == 'prod' }}
+      run: echo "Waiting for QA deployment to finish"
+
+    - name: Deploy to production
+      if: ${{ matrix.environment == 'prod' }}
+      run: echo "Deploy step for production environment"
