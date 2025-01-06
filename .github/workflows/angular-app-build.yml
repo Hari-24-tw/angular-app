@@ -45,6 +45,9 @@ jobs:
   deploy: 
     runs-on: ubuntu-24.04
     needs: build
+    strategy:
+      matrix:
+        environment: ${{ fromJson(github.event.inputs.environments || '["dev"]') }}
     environment: ${{ matrix.environment }}
 
     steps:
