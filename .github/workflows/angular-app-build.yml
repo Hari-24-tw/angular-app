@@ -6,7 +6,7 @@ on:
       environments:
         description: 'Comma-separated list of environments to deploy to'
         required: true
-        default: 'dev'
+        default: '["dev"]'
         type: string
   push:
     branches:
