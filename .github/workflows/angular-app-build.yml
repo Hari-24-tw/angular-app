@@ -45,7 +45,8 @@ jobs:
   deploy: 
     runs-on: ubuntu-24.04
     needs: build
-    
+    environment: ${{ matrix.environment }}
+
     steps:
     - name: Deploy to ${{ matrix.environment }}
       run: echo "Deploy step for ${{ matrix.environment }} environment"
