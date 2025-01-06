@@ -6,25 +6,15 @@ on:
             - completed
 
 jobs:
-    deploy-dev:
+    deploy:
         runs-on: ubuntu-22.04
-        environment: DEV
+        strategy:
+            matrix:
+                environment: [dev, qa, prod] # List all possible environments here
+        environment: ${{ matrix.environment }}
         steps:
-            - name: Deploy to Dev
-              run: echo "Development deployment successful"
-
-    deploy-qa:
-        needs: deploy-dev
-        runs-on: ubuntu-22.04
-        environment: QA
-        steps:
-           - name: Deploy to QA
-             run: echo "Testing deployment successful"
-
-    deploy-prod:
-        needs: deploy-qa
-        runs-on: ubuntu-22.04
-        environment: PROD
-        steps:
-          - name: Deploy to Prod
-            run: echo "Production deployment successful"
+            - name: Set environment variable
+              run: echo "ENVIRONMENT=${{ matrix.environment }}" | tr '[:lower:]' '[:upper:]' >> $GITHUB_ENV
+            - name: Deploy to ${{ env.ENVIRONMENT }}
+              if: contains(github.event.workflow_run.conclusion, 'success')
+              run: echo "${{ env.ENVIRONMENT }} deployment successful"
