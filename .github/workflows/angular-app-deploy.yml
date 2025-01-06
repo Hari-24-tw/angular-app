@@ -24,7 +24,7 @@ jobs:
             - name: Deploy to built environments
               if: contains(github.event.workflow_run.conclusion, 'success')
               run: |
-                  for ENV in ${{ env.BUILT_ENVS }}; do
+                  for ENV in $BUILT_ENVS; do
                       echo "Deploying to $ENV"
                       # Add your deployment script/command here
                       echo "$ENV deployment successful"
