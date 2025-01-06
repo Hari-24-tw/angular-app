@@ -3,16 +3,11 @@ name: Angular-app-build
 on:
   workflow_dispatch:
     inputs:
-      environment:
-        description: 'Environment to deploy to'
+      environments:
+        description: 'Comma-separated list of environments to deploy to'
         required: true
         default: 'dev'
-        type: choice
-        options:
-          - dev
-          - qa
-          - uat
-          - prod
+        type: string
   push:
     branches:
       - main
@@ -23,6 +18,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        environment: ${{ fromJson(github.event.inputs.environments) }}
 
     steps:
     - name: Checkout repository
@@ -39,11 +37,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Build Angular app for ${{ github.event.inputs.environment }}
-      run: ng build --progress=false -c=${{ github.event.inputs.environment }} --output-path=dist${{ github.event.inputs.environment }} --base-href=/
+    - name: Build Angular app for ${{ matrix.environment }}
+      run: ng build --progress=false -c=${{ matrix.environment }} --output-path=dist${{ matrix.environment }} --base-href=/
 
-    - name: Upload ${{ github.event.inputs.environment }} artifact
-      uses: actions/upload-artifact@v4.5.0
-      with:
-        name: angular-app-${{ github.event.inputs.environment }}-${{ github.run_number }}.zip
-        path: dist${{ github.event.inputs.environment }}/
+    - name: Upload ${{ matrix.environment }} artifact
+      run: echo "Upload step for ${{ matrix.environment }} environment"
