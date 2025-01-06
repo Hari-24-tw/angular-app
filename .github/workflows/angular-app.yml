@@ -42,7 +42,7 @@ jobs:
     - name: Upload ${{ matrix.environment }} artifact
       uses: actions/upload-artifact@v4
       with:
-        name: dist${{ matrix.environment }}
+        path: dist${{ matrix.environment }}
 
   deploy: 
     runs-on: ubuntu-24.04
