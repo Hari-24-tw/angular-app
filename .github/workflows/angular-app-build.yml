@@ -24,7 +24,8 @@ jobs:
   build:
     strategy:
       matrix:
-        environment: ${{ github.event.inputs.environment }}
+        include:
+          - environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-24.04
 
     steps:
