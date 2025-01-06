@@ -40,7 +40,9 @@ jobs:
       run: ng build --progress=false -c=${{ matrix.environment }} --output-path=dist${{ matrix.environment }} --base-href=/
 
     - name: Upload ${{ matrix.environment }} artifact
-      run: echo "Upload step for ${{ matrix.environment }} environment"
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist${{ matrix.environment }}
 
   deploy: 
     runs-on: ubuntu-24.04
