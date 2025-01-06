@@ -10,7 +10,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             - name: Download build artifact
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v3
               with:
                   name: built-environments
                   path: ./built-environments
