@@ -41,3 +41,11 @@ jobs:
 
     - name: Upload ${{ matrix.environment }} artifact
       run: echo "Upload step for ${{ matrix.environment }} environment"
+
+  deploy: 
+    runs-on: ubuntu-24.04
+    needs: build
+    
+    steps:
+    - name: Deploy to ${{ matrix.environment }}
+      run: echo "Deploy step for ${{ matrix.environment }} environment"
