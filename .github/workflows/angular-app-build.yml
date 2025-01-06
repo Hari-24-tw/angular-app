@@ -14,13 +14,17 @@ on:
           required: true
           default: 'dev'
                 
+env:
+  MATRIX_ENV: ${{ github.event.inputs.environment }}
+
 
 jobs:
   build:
     strategy:
       matrix:
-        environment: ${{ github.event.inputs.environment }}
+        environment: [ "dev", "staging", "prod" ]
     runs-on: ubuntu-24.04
+    environment: ${{ github.event.inputs.environment }}
 
     steps:
     - name: Checkout repository
