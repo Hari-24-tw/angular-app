@@ -14,6 +14,7 @@ This workflow is triggered on push and pull request events to the `main` branch.
   - `push` to `main` branch
   - `pull_request` to `main` branch
 
+
 - **Job: build**:
   - **Runs-on**: `ubuntu-24.04`
   - **Matrix Strategy**: Builds the application for multiple environments specified in the matrix (`dev`, `qa`, `prod`).
@@ -79,3 +80,14 @@ This workflow is triggered manually using the `workflow_dispatch` event. It buil
 
 ## Conclusion
 These workflows provide a robust CI/CD pipeline for building and deploying an Angular application to multiple environments. The `angular-app.yml` workflow is triggered automatically on code changes, while the `angular-app-custom.yml` workflow allows for manual triggering with specific inputs.
+
+---
+### Useful Links for GitHub Actions
+
+- [Understanding GitHub Actions](https://docs.github.com/en/actions/about-github-actions/understanding-github-actions): Learn the basics of GitHub Actions.
+- [Writing and Customizing GitHub Actions Workflows](https://docs.github.com/en/actions/writing-workflows): Guide on creating and modifying workflows.
+- [Reusing Workflows](https://docs.github.com/en/actions/sharing-automations/reusing-workflows): Instructions on how to reuse workflows.
+- [Events that Trigger Workflows](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows): Details on events that can trigger workflows.
+- [Sharing Automations](https://docs.github.com/en/actions/sharing-automations): Information on sharing automation scripts.
+- [Managing Environments for Deployment](https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-deployments/managing-environments-for-deployment): Guide on managing deployment environments.
+- [Running Variations of Jobs in a Workflow](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow): Learn how to run different job variations in a workflow.
