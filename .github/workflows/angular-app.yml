@@ -7,13 +7,7 @@ on:
         description: 'Comma-separated list of environments to deploy to'
         default: '["dev"]'
         type: string
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
+        
 jobs:
   build:
     runs-on: ubuntu-24.04
