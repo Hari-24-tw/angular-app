@@ -17,8 +17,8 @@ RUN npm install
 COPY . .
 
 # Build the Angular app for the specified environment
-ARG ENVIRONMENT=${{ENVIRONMENT}}
-RUN ng build --progress=false -c=${ENVIRONMENT} --output-path=dist/${ENVIRONMENT} --base-href=/
+ARG ENVIRONMENT
+RUN ng build --progress=false -c=$ENVIRONMENT --output-path=dist/$ENVIRONMENT --base-href=/
 
 # Expose the port the app runs on
 EXPOSE 80
