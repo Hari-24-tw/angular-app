@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM harishtw/node-base:22-alpine
+FROM node:20-alpine
 
 # Set the working directory
 WORKDIR /app
@@ -25,4 +25,7 @@ EXPOSE 80
 
 # Serve the app using a simple web server
 RUN npm install -g http-server
-CMD ["http-server", "dist/production", "-p", "80"]
+
+WORKDIR /app/dist/$ENVIRONMENT
+
+CMD ["http-server", "-p", "80"]
