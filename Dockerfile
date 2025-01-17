@@ -1,30 +1,26 @@
-# Use the official Node.js image as the base image
-FROM node:20-alpine
+#stage 1
+FROM node:20-alpine AS build
 
-# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install Angular CLI globally
 RUN npm install -g @angular/cli
 
-# Install project dependencies
 RUN npm install
 
-# Copy the rest of the application code to the working directory
 COPY . .
 
-# Build the Angular app for the specified environment
 ARG ENVIRONMENT
+
 RUN ng build --progress=false -c=$ENVIRONMENT --output-path=dist/$ENVIRONMENT --base-href=/
 
-# Expose the port the app runs on
-EXPOSE 80
+#stage 2
+FROM node:20-alpine
 
-# Serve the app using a simple web server
-RUN npm install -g http-server
+COPY --from=build /app/dist/$ENVIRONMENT /app/dist/$ENVIRONMENT
+
+EXPOSE 80
 
 WORKDIR /app/dist/$ENVIRONMENT
 
