@@ -12,6 +12,9 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                environment: ['dev', 'qa', 'prod']
 
         steps:
         - name: Checkout repository
@@ -24,7 +27,7 @@ jobs:
           run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
         - name: Build Docker image
-          run: docker build --build-arg ENVIRONMENT=prod -t angular-app:latest .
+          run: docker build --build-arg ENVIRONMENT=${{matrix.environment}} -t angular-app-${{matrix.environment}}:latest .
 
         - name: Show docker images
           run: docker images
