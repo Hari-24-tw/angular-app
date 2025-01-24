@@ -5,6 +5,7 @@ on:
     inputs:
         environments:
             description: 'Comma-separated list of environments to deploy to e.g. ["qa", "prod"]'
+            default: 'dev'
             required: false
             type: string
         sha:
