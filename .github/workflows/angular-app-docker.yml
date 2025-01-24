@@ -1,20 +1,29 @@
 name: Build Angular App with Docker
 
 on:
-    workflow_dispatch:
-    push:
+  workflow_dispatch:
+    inputs:
+        environments:
+            description: 'Comma-separated list of environments to deploy to e.g. ["qa", "prod"]'
+            default: '["qa", "prod"]'
+            type: string
+        sha:
+            description: 'Commit SHA to deploy'
+            required: true
+            type: string
+
+  push:
         branches:
             - main
-    pull_request:
+  pull_request:
         branches:
             - main
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                environment: ['dev', 'qa', 'prod']
+    build-DEV:
+        runs-on: ubuntu-20.04
+        env:
+            ENVIRONMENT: dev
 
         steps:
         - name: Checkout repository
@@ -27,7 +36,35 @@ jobs:
           run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
         - name: Build Docker image
-          run: docker build --build-arg ENVIRONMENT=${{matrix.environment}} -t angular-app-${{matrix.environment}}:latest .
+          run: docker build --build-arg ENVIRONMENT=${{ env.ENVIRONMENT }} -t angular-app-${{ env.ENVIRONMENT }}:latest .
 
         - name: Show docker images
           run: docker images
+        
+        - name: Push Docker image
+          run: docker push harishtw/angular-app-${{ env.ENVIRONMENT }}:latest
+    
+    build-QA-PROD:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                environment: ${{ fromJson(github.event.inputs.environments)}}
+                
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v2
+
+        - name: Log in to DockerHub
+          run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+        - name: Build Docker image
+          run: docker build --build-arg ENVIRONMENT=${{matrix.environment}} -t harishtw/angular-app-${{matrix.environment}}:latest .
+
+        - name: Show docker images
+          run: docker images
+        
+        - name: Push Docker image
+          run: docker push harishtw/angular-app-${{matrix.environment}}:latest

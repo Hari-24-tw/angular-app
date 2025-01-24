@@ -1,11 +1,10 @@
-#stage 1
-FROM node:20-alpine AS build
+# Stage 1: Build the Angular app
+FROM harishtw/node-22-base:base AS build
 
 WORKDIR /app
 
+# Copy package.json and install dependencies
 COPY package*.json ./
-
-RUN npm install -g @angular/cli
 
 RUN npm install
 
@@ -13,15 +12,19 @@ COPY . .
 
 ARG ENVIRONMENT
 
-RUN ng build --progress=false -c=$ENVIRONMENT --output-path=dist/$ENVIRONMENT --base-href=/
+RUN ng build --configuration=$ENVIRONMENT --output-path=dist/$ENVIRONMENT --base-href=/
 
-#stage 2
-FROM node:20-alpine
+# Stage 2: Serve the Angular app
+FROM nginx:1.19.6-alpine
 
-COPY --from=build /app/dist/$ENVIRONMENT /app/dist/$ENVIRONMENT
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY --from=build /app/dist/$ENVIRONMENT /usr/share/nginx/html
+
+COPY nginx.conf /etc/nginx/nginx.conf
+
+RUN chmod -R 755 /usr/share/nginx/html
 
 EXPOSE 80
 
-WORKDIR /app/dist/$ENVIRONMENT
-
-CMD ["http-server", "-p", "80"]
+CMD ["nginx", "-g", "daemon off;"]
