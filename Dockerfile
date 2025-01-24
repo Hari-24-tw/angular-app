@@ -1,5 +1,5 @@
 # Stage 1: Build the Angular app
-FROM harishtw/node-22-base:base AS build
+FROM harishtw/node-base:alpine AS build
 
 WORKDIR /app
 
