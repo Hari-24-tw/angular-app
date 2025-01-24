@@ -5,7 +5,6 @@ on:
     inputs:
         environments:
             description: 'Comma-separated list of environments to deploy to e.g. ["qa", "prod"]'
-            default: 'dev'
             required: false
             type: string
         sha:
@@ -22,7 +21,7 @@ on:
 
 jobs:
     build-DEV:
-        if : ${{ github.event.inputs.environments == 'dev'}}
+        if : ${{ github.event.inputs.environments == ''}}
         runs-on: ubuntu-20.04
         env:
             ENVIRONMENT: dev
