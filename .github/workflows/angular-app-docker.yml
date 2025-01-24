@@ -45,7 +45,11 @@ jobs:
               push: true
               tags: harishtw/angular-app-${{ env.ENVIRONMENT }}:latest
               build-args: ENVIRONMENT=${{ env.ENVIRONMENT }}
+          
+          - name: Show docker images
+            run: docker images
 
+            
     build-QA-PROD:
         runs-on: ubuntu-20.04
         if: ${{ github.event.inputs.environments }}
