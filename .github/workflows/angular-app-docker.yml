@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
         environments:
-            description: 'Comma-separated list of environments to deploy to e.g. ["qa", "prod"]'
+            description: 'Comma-separated list of environments to deploy to e.g. ["dev", "qa", "prod"]'
             required: false
             type: string
         sha:
@@ -20,8 +20,8 @@ on:
             - main
 
 jobs:
-    build-DEV:
-        if : ${{ github.event.inputs.environments == '' || contains(fromJson(github.event.inputs.environments), 'dev') }}
+    Dev-build:
+        if : ${{ github.event.inputs.environments == ''}}
         runs-on: ubuntu-20.04
         env:
             ENVIRONMENT: dev
@@ -48,7 +48,7 @@ jobs:
               build-args: ENVIRONMENT=${{ env.ENVIRONMENT }}
 
 
-    build-QA-PROD:
+    matrix-build:
         runs-on: ubuntu-20.04
         if: ${{ github.event.inputs.environments }}
         strategy:
