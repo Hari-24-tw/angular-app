@@ -5,7 +5,6 @@ on:
     inputs:
         environments:
             description: 'Comma-separated list of environments to deploy to e.g. ["qa", "prod"]'
-            default: '["qa", "prod"]'
             type: string
         sha:
             description: 'Commit SHA to deploy'
@@ -21,7 +20,7 @@ on:
 
 jobs:
     build-DEV:
-        runs-on: ubuntu-20.04
+        runs-on: macos-latest
         env:
             ENVIRONMENT: dev
 
@@ -45,7 +44,7 @@ jobs:
           run: docker push harishtw/angular-app-${{ env.ENVIRONMENT }}:latest
     
     build-QA-PROD:
-        runs-on: ubuntu-latest
+        runs-on: macos-latest
         strategy:
             matrix:
                 environment: ${{ fromJson(github.event.inputs.environments)}}
